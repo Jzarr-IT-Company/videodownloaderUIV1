@@ -24,7 +24,7 @@ const AUDIO_EXTENSIONS = ["mp3", "m4a", "aac", "wav", "ogg"];
 export default function DownloadForm({ validateUrl, platform }: DownloadFormProps) {
   const [url, setUrl] = useState("");
   const [format, setFormat] = useState("mp4");
-  const [quality, setQuality] = useState("720p");
+  const quality = "720p";
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [downloadLinks, setDownloadLinks] = useState<string[]>([]);
@@ -204,13 +204,11 @@ export default function DownloadForm({ validateUrl, platform }: DownloadFormProp
       <select
         id="quality"
         value={quality}
-        onChange={(e) => setQuality(e.target.value)}
         className={styles.select}
-        disabled={format === "mp3"}
+        disabled
+        aria-readonly="true"
       >
-        <option value="480p">480p</option>
         <option value="720p">720p</option>
-        <option value="1080p">1080p</option>
       </select>
 
       <button type="submit" className={styles.button} disabled={loading}>
