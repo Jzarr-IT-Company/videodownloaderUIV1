@@ -14,6 +14,7 @@ type DownloadResponse = {
   warning?: string;
   error?: string;
   details?: string;
+  code?: string;
 };
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5000";
@@ -72,15 +73,26 @@ export default function DownloadForm({ validateUrl, platform }: DownloadFormProp
       const data = (await response.json()) as DownloadResponse;
 
       if (!response.ok) {
-        const combinedErrorText = `${data.error || ""} ${data.details || ""}`.toLowerCase();
+        const combinedErrorText =
+          `${data.code || ""} ${data.error || ""} ${data.details || ""}`.toLowerCase();
         const isYouTubeBotBlock =
           combinedErrorText.includes("sign in to confirm you") ||
           combinedErrorText.includes("not a bot") ||
           combinedErrorText.includes("youtube is blocking downloads");
+        const isInstagramRateLimited =
+          combinedErrorText.includes("instagram_auth_required") ||
+          (combinedErrorText.includes("instagram") &&
+            (combinedErrorText.includes("rate-limit reached") ||
+              combinedErrorText.includes("login required") ||
+              combinedErrorText.includes("use --cookies")));
 
         if (isYouTubeBotBlock) {
           setError(
             "YouTube download is blocked on this hosted server by platform bot-protection. Try another platform link or run backend locally.",
+          );
+        } else if (isInstagramRateLimited) {
+          setError(
+            "Instagram is rate-limiting or requiring login on this hosted backend. Try again later or use backend cookies authentication.",
           );
         } else {
           setError(data.error || "Download failed");
