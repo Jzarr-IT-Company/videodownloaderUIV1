@@ -13,6 +13,7 @@ type DownloadResponse = {
   files?: string[];
   warning?: string;
   error?: string;
+  details?: string;
 };
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5000";
@@ -71,7 +72,19 @@ export default function DownloadForm({ validateUrl, platform }: DownloadFormProp
       const data = (await response.json()) as DownloadResponse;
 
       if (!response.ok) {
-        setError(data.error || "Download failed");
+        const combinedErrorText = `${data.error || ""} ${data.details || ""}`.toLowerCase();
+        const isYouTubeBotBlock =
+          combinedErrorText.includes("sign in to confirm you") ||
+          combinedErrorText.includes("not a bot") ||
+          combinedErrorText.includes("youtube is blocking downloads");
+
+        if (isYouTubeBotBlock) {
+          setError(
+            "YouTube download is blocked on this hosted server by platform bot-protection. Try another platform link or run backend locally.",
+          );
+        } else {
+          setError(data.error || "Download failed");
+        }
         return;
       }
 
