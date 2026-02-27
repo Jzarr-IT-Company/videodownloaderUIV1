@@ -1,0 +1,113 @@
+.navbar {
+  background: #181818;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  width: 100%;
+  position: relative;
+  z-index: 10;
+}
+
+.navbarContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
+}
+
+.logo a {
+  color: #61dafb;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-decoration: none;
+  letter-spacing: -1px;
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.hamburgerBar {
+  width: 28px;
+  height: 3px;
+  background: #61dafb;
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+
+.navList {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+
+.navList li a {
+  color: #61dafb;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1.1rem;
+  transition: color 0.2s;
+}
+
+.navList li a:hover,
+.active {
+  color: #fff;
+  border-bottom: 2px solid #61dafb;
+}
+
+/* Responsive styles */
+@media (max-width: 900px) {
+  .navbarContainer {
+    padding: 1rem 0.7rem;
+  }
+  .navList {
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .hamburger {
+    display: flex;
+  }
+  .navList {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #181818;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    padding: 0.5rem 0;
+    display: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .navListOpen {
+    display: flex;
+  }
+  .navList li {
+    width: 100%;
+  }
+  .navList li a {
+    display: block;
+    width: 100%;
+    padding: 0.9rem 1.5rem;
+    font-size: 1.08rem;
+    border-bottom: 1px solid #23272a;
+  }
+  .navList li:last-child a {
+    border-bottom: none;
+  }
+}

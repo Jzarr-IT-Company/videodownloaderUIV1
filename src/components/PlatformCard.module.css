@@ -1,0 +1,31 @@
+.platformCard {
+  background: #111;
+  border-radius: 12px;
+  padding: 1.2rem 2.2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  font-size: 1.15rem;
+  color: #fff;
+  margin: 0.5rem 0;
+  transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  font-weight: 600;
+}
+.platformCard:focus,
+.platformCard:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+  background: #222;
+}
+.icon {
+  color: #1da1f2;
+  font-size: 2rem;
+}
+.platformName {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
