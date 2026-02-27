@@ -85,14 +85,40 @@ export default function DownloadForm({ validateUrl, platform }: DownloadFormProp
             (combinedErrorText.includes("rate-limit reached") ||
               combinedErrorText.includes("login required") ||
               combinedErrorText.includes("use --cookies")));
+        const isGeoRestricted =
+          combinedErrorText.includes("geo_restricted") ||
+          combinedErrorText.includes("geo-restricted") ||
+          combinedErrorText.includes("not available in your country");
+        const isExtractorMismatch =
+          combinedErrorText.includes("extractor_mismatch") ||
+          combinedErrorText.includes("unable to extract") ||
+          combinedErrorText.includes("unsupported url");
+        const isDailymotionHostBlocked =
+          combinedErrorText.includes("dailymotion_host_block") ||
+          (combinedErrorText.includes("dailymotion") &&
+            (combinedErrorText.includes("http error 403") ||
+              combinedErrorText.includes("forbidden") ||
+              combinedErrorText.includes("access denied")));
 
         if (isYouTubeBotBlock) {
           setError(
             "YouTube download is blocked on this hosted server by platform bot-protection. Try another platform link or run backend locally.",
           );
+        } else if (isDailymotionHostBlocked) {
+          setError(
+            "Dailymotion is blocking this hosted backend IP. Try another Dailymotion URL or host backend on a different network/region.",
+          );
+        } else if (isGeoRestricted) {
+          setError(
+            "This video is geo-restricted for the backend server region. Try another video or move backend to a region where the video is available.",
+          );
         } else if (isInstagramRateLimited) {
           setError(
             "Instagram is rate-limiting or requiring login on this hosted backend. Try again later or use backend cookies authentication.",
+          );
+        } else if (isExtractorMismatch) {
+          setError(
+            "Hosted backend extractor/runtime mismatch. Update yt-dlp on backend and redeploy.",
           );
         } else {
           setError(data.error || "Download failed");
