@@ -25,7 +25,7 @@ export const PLATFORM_LABELS: Record<PlatformSlug, string> = {
 export const PLATFORM_VALIDATORS: Record<PlatformSlug, RegExp> = {
   youtube: /^https?:\/\/(www\.)?(youtube\.com|youtu\.be)\//i,
   facebook: /^https?:\/\/(www\.)?facebook\.com\//i,
-  twitter: /^https?:\/\/(www\.)?twitter\.com\//i,
+  twitter: /^https?:\/\/(www\.)?(twitter\.com|x\.com)\//i,
   instagram: /^https?:\/\/(www\.)?instagram\.com\//i,
   tiktok: /^https?:\/\/(www\.)?tiktok\.com\//i,
   linkedin: /^https?:\/\/(www\.)?linkedin\.com\//i,
