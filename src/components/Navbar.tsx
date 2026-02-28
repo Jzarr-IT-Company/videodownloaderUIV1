@@ -9,7 +9,7 @@ const navLinks = [
   { href: "/", label: "Home" },
   { href: "/download", label: "Download" },
   { href: "/privacy", label: "Privacy Policy" },
-  { href: "/blog", label: "Blog" },
+  { href: "https://downloadvideoonline.com/blog/", label: "Blog", external: true },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
@@ -43,7 +43,30 @@ export default function Navbar() {
 
         <ul className={`${styles.navList} ${open ? styles.navListOpen : ""}`}>
           {navLinks.map((link) => {
-            const isActive = pathname === link.href;
+            const normalizedPathname =
+              pathname.endsWith("/") && pathname !== "/" ? pathname.slice(0, -1) : pathname;
+            const isExternal = Boolean(link.external);
+            const normalizedHref =
+              !isExternal && link.href.endsWith("/") && link.href !== "/"
+                ? link.href.slice(0, -1)
+                : link.href;
+            const isActive = !isExternal && normalizedPathname === normalizedHref;
+
+            if (isExternal) {
+              return (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    onClick={handleClose}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              );
+            }
+
             return (
               <li key={link.href}>
                 <Link
